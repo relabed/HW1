@@ -5,11 +5,8 @@ Teacher Pr Lakhdar LOUKIL
 
 Student Ramzi El Abed & Houari Belarbi
 
-The First Program called : mmm_sequential
-Multiply two square matrix using langage C with Eclipse IDE 202-12 in sequential mode
+Multiply two square matrix using langage C with Eclipse IDE 202-12 in sequential mode & parallel mode (with pthread)
 
-The Second Program called : mmm_parallel
-Multiply two square matrix using langage C with Eclipse IDE 202-12 in parallel mode (with pthread)
 
 This is what we do in this homework :
 
