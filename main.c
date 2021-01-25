@@ -60,7 +60,6 @@ int main()
 			for (i = 0; i < n; i++)
 				C[i] = (int *)malloc(n * sizeof(int));
 
-		printf("Multiplication de la matrice = \n");
 		t1 = clock(); /* ici on commence à chronometrer le temps */
 		for(i = 0; i < n; i++)
 		{
@@ -156,11 +155,12 @@ int main()
 		    				    					    	    	}
 		    				    					    	 }
 
-		pthread_t child_threads[NUM_THREADS];
+		       	pthread_t child_threads[NUM_THREADS];
 			    struct thread_args work_ranges[NUM_THREADS];
 			    int current_start, range;
 			    current_start = 0;
 			    range = DIM / NUM_THREADS;
+
 			    for(int i = 0; i < NUM_THREADS; i++) {
 			        work_ranges[i].start = current_start;
 			        work_ranges[i].end = current_start + range;
@@ -178,6 +178,7 @@ int main()
 
 temps_p = (float)(t2-t1)/CLOCKS_PER_SEC;
 printf("temps d'execution en mode parallèle en secondes = %f\n", temps_p);
+
 printf("Accélération de Calcul = %f\n", temps_s/temps_p);
 
 int **E = (int **)malloc(DIM * sizeof(int *)); // on alloue de l'espace pour la matrice de vérification des résultats parallèls et sequentiels
@@ -186,11 +187,11 @@ E[i] = (int *)malloc(DIM * sizeof(int));
 
 for (i = 0; i < DIM; ++i) {
 		for (j = 0; j < DIM; ++j) {
-			E[i][j]=D[i][j]-C[i][j];
+			E[i][j]=D[i][j]-C[i][j]; // la matrice E contient la soustraction entre le résultat de la multiplication parallèle et le résultat de la multiplication séquentiel
 					}
 	}
 
-if (E[DIM-1][DIM-1] == 0){
+if (E[DIM-1][DIM-1] == 0){ // si la valeur est égal à zéro alors les deux matrices (multiplication parallèle et multiplication séquentiel sont identiques)
 	printf("les Matrices résultantes de la multiplication en mode séquentiel et parallèle sont identiques");
 }
 else {
