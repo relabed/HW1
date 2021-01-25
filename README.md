@@ -21,9 +21,9 @@ one generated using the sequential algorithm.
 - We have commenting the programs
 
 Execution of the program :
-- after downloading HW1_Master.zip from github
+- after downloading HW1-main.zip from github
 - Decompressed in Linux (Ubuntu if possible)
-- Open a terminal from the folder HW1_Master
+- Open a terminal from the folder HW1-main
 - run make command
 - execute with ./hw1_ramzi.exe
 - you will be ask to choose between sequential and parallel mode by typing (s or p), if you tape another character or number the program stop, you will have to execute it another time
