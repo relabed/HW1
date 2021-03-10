@@ -21,7 +21,7 @@ one generated using the sequential algorithm.
 - We have commenting the programs
 
 Execution of the program :
-- after downloading all the 4 files : initmatrix.c initmatrix.h main.c Makefile
+- after downloading all the 6 files : initmatrix.c initmatrix.h multiply.c multiply.h main.c Makefile
 - put it in a folder under linux
 - Open a terminal from this folder
 - run make command
