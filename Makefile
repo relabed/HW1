@@ -1,7 +1,7 @@
-all:    hw1_ramzi_2nd_part.exe
+all:    hw1_ramzi.exe
 
-hw1_ramzi_2nd_part.exe:  main.o initMatrix.o
-	gcc main.o initMatrix.o -o hw1_ramzi_2nd_part.exe -lpthread
+hw1_ramzi.exe:  main.o initMatrix.o multiply.o
+	gcc main.o initMatrix.o multiply.o -o hw1_ramzi.exe -lpthread
 
 main.o: main.c
 	gcc -c main.c -o main.o
@@ -9,5 +9,8 @@ main.o: main.c
 initMatrix.o:   initMatrix.c
 	gcc -c initMatrix.c -o initMatrix.o
 
+multiply.o:   multiply.c
+	gcc -c multiply.c -o multiply.o
+
 clean:
-	rm -fr hw1_ramzi_2nd_part *.o
+	rm -fr hw1_ramzi *.o
