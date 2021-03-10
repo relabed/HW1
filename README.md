@@ -3,7 +3,7 @@ HW1 MASTER 2 IIPE
 This is the first homework for APP (Architecture and Parallel Programing) Module In the Master 2 IIPE (Informatique Industrielle, Parallèle et Embarquée)
 Teacher Pr Lakhdar LOUKIL
 
-Student Ramzi El Abed & Houari Belarbi
+Student Ramzi El Abed
 
 Multiply two square matrix using langage C with Eclipse IDE 202-12 in sequential mode & parallel mode (with pthread)
 
