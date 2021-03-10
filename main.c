@@ -12,13 +12,16 @@
 #include <sys/time.h>
 
 #include "initMatrix.h"
+#include "multiply.h"
 
 struct thread_args{
 	    int start;
 	    int end;
+	    int **matrixA;
+	    int **matrixB;
+	    int **matrixD;
+	    int l;
 	};
-
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 int main()
 {
@@ -133,44 +136,36 @@ int main()
 		    			}
 		    		}
 
+
 		    		t4 = clock(); /* ici on arrête de chronometrer le temps du séquentiel */
 		    		temps_s = (float)(t4-t3)/CLOCKS_PER_SEC;
 
 		    		    printf("temps d'execution en mode séquentiel en secondes = %f\n", temps_s);
 
 
-		       void *multiply(void *arg) {
-		    		struct thread_args * range = (struct thread_args *) arg;
-		    			for(int i = range->start; i < range->end; i++) {  // two-dimensional decomposition
-		    				 for(int j = 0; j < DIM; j++) { // two-dimensional decomposition
-		    				    long thread_private_tmp = 0;
-		    				    	for(int k = 0; k < DIM; k++) { // two-dimensional decomposition
-		    				          thread_private_tmp += A[i][k] * B[k][j];
-		    				    					   }
-		    				                        pthread_mutex_lock(&lock);
-		    				    					 D[i][j] += thread_private_tmp;
-		    				    					 pthread_mutex_unlock(&lock);
-		    				    					    	    	    }
-		    				    					    	    	}
-		    				    					    	 }
-
 		       	pthread_t child_threads[NUM_THREADS];
 			    struct thread_args work_ranges[NUM_THREADS];
 			    int current_start, range;
 			    current_start = 0;
-			    range = (DIM / (DIM / NUM_THREADS));  // two-dimensional decomposition
-			    for(int i = 0; i < (DIM / NUM_THREADS); i++) { // two-dimensional decomposition
+			    range = DIM / NUM_THREADS;
+
+			    for(int i = 0; i < NUM_THREADS; i++) {
 			        work_ranges[i].start = current_start;
 			        work_ranges[i].end = current_start + range;
 			        current_start += range;
 			    }
-			    work_ranges[(DIM / NUM_THREADS)-1].end = DIM; // two-dimensional decomposition
+
+			    work_ranges[NUM_THREADS-1].end = DIM;
 			    t1 = clock(); // ici on commence à chronometrer le temps du parallèle
-			    for(int i = 0; i < (DIM / NUM_THREADS); i++) { // two-dimensional decomposition
+			    for(int i = 0; i < NUM_THREADS; i++) {
+			    	work_ranges[i].matrixA = A;
+			    	work_ranges[i].matrixB = B;
+			    	work_ranges[i].matrixD = D;
+			    	work_ranges[i].l = DIM;
 			        pthread_create(&child_threads[i], NULL, multiply, &work_ranges[i]);
-			    }
+			   }
 			    t2 = clock(); // ici on arrête de chronometrer le temps du parallèle
-			    for(int i = 0; i < (DIM / NUM_THREADS); i++) { // two-dimensional decomposition
+			   for(int i = 0; i < NUM_THREADS; i++) {
 			        pthread_join(child_threads[i], NULL);
 			    }
 
@@ -186,7 +181,7 @@ E[i] = (int *)malloc(DIM * sizeof(int));
 for (i = 0; i < DIM; ++i) {
 		for (j = 0; j < DIM; ++j) {
 			E[i][j]=D[i][j]-C[i][j]; // la matrice E contient la soustraction entre le résultat de la multiplication parallèle et le résultat de la multiplication séquentiel
-		}
+					}
 	}
 
 if (E[DIM-1][DIM-1] == 0){ // si la valeur est égal à zéro alors les deux matrices (multiplication parallèle et multiplication séquentiel sont identiques)
